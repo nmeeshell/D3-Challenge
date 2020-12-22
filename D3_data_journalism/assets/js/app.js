@@ -37,8 +37,6 @@ let chosenYAxis = "healthcare";
     data.poverty    = +data.poverty;
     data.healthcare = +data.healthcare;
     data.age        = +data.age;
-    data.smokes     = +data.smokes;
-    data.obesity    = +data.obesity;
     data.income     = +data.income;
   });
 
@@ -111,22 +109,6 @@ let chosenYAxis = "healthcare";
     .attr("value", "healthcare") // value to grab for event listener
     .text("Lacks Healthcare (%)")
     .classed("active", true);
-
-  const smokesLabel = ylabelsGroup.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("x", -(height / 2))
-    .attr("y", -60)
-    .attr("value", "smokes") // value to grab for event listener
-    .text("Smokes (%)")
-    .classed("inactive", true);
-
-  const obeseLabel = ylabelsGroup.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("x", -(height / 2))
-    .attr("y", -80)
-    .attr("value", "obesity") // value to grab for event listener
-    .text("Obese (%)")
-    .classed("inactive", true);
 
   // initial tooltips
   circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis);
@@ -223,35 +205,7 @@ let chosenYAxis = "healthcare";
         healthcareLabel
           .classed("active", false)
           .classed("inactive", true);
-        smokesLabel
-          .classed("active", true)
-          .classed("inactive", false);
-        obeseLabel
-          .classed("active", false)
-          .classed("inactive", true);
-      }
-      else if (chosenYAxis === "obesity"){
-        healthcareLabel
-          .classed("active", false)
-          .classed("inactive", true);
-        smokesLabel
-          .classed("active", false)
-          .classed("inactive", true);
-        obeseLabel
-          .classed("active", true)
-          .classed("inactive", false);
-      }
-      else {
-        healthcareLabel
-          .classed("active", true)
-          .classed("inactive", false);
-        smokesLabel
-          .classed("active", false)
-          .classed("inactive", true);
-        obeseLabel
-          .classed("active", false)
-          .classed("inactive", true);
-      }
+     
     }
   });
 

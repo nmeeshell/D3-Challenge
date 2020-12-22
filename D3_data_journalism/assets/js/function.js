@@ -106,14 +106,8 @@ function xScale(csvData, chosenXAxis) {
   
     let ypercentsign = "";
     let ylabel = "";
-    if (chosenYAxis === "healthcare") {
+    (chosenYAxis === "healthcare") {
       ylabel = "Healthcare";
-      ypercentsign = "%";
-    } else if (chosenYAxis === "smokes"){
-      ylabel = "Smokes";
-      ypercentsign = "%";
-    } else {
-      ylabel = "Obesity";
       ypercentsign = "%";
     }
   

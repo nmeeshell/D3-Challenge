@@ -18,22 +18,33 @@ const svg = d3.select("body").append("svg")
 const chartG = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`)
 
+  const xScale = (data, selection) => {
 
-const update = (data, xAxisG, circles, selection) => {
-
-  let selectionDataKey = selection === "Num Albums" ?  "obesity" : "poverty"
-
-  const selectionData = data.map(d => parseInt(d[selectionDataKey]))
-
-  const newXScale = d3.scaleLinear()
-    .domain([0, d3.max(selectionData)])
-    .range([0, chartWidth])
+    let selectionData
+    if (selection === "poverty"){
+      selectionData = data.map(d => parseInt(d.poverty))
+    } else if (selection === "pealthcare"){
+      selectionData = data.map(d => parseInt(d.healthcare))
+    }
+    console.log(selectionData)
   
-  const xAxis = d3.axisBottom(newXScale)
+    const x = d3.scaleLinear()
+      .domain([0, d3.max(selectionData)])
+      .range([0, chartWidth])
+  
+    return(x)
+  }
 
-  xAxisG.transition()
-    .duration(1000)
-    .call(xAxis)
+    const renderCircles = (circles, newXScale, selection) =>{
+
+      let selectionDataKey
+    
+      if (selection === "poverty"){
+        selectionDataKey = "poverty"
+      } else if (selection === "healthcare"){
+        selectionDataKey = "healthcare"
+      }
+
 
   circles.transition()
     .duration(1000)
@@ -43,14 +54,14 @@ const update = (data, xAxisG, circles, selection) => {
 d3.csv("D3_data_journalism/assets/data/data.csv").then(data => {
     console.log(data)
     console.log(d3.max(data.map(d => parseInt(d.poverty))))
-    console.log(d3.max(data.map(d => parseInt(d.obesity))))
+    console.log(d3.max(data.map(d => parseInt(d.healthcare))))
 
     const y = d3.scaleLinear()
-        .domain([0, d3.max(data.map(d => parseInt(d.age)))])
+        .domain([0, d3.max(data.map(d => parseInt(d.poverty)))])
         .range([chartHeight, 0])
 
     const x = d3.scaleLinear()
-        .domain([0, d3.max(data.map(d => parseInt(d.obesity)))])
+        .domain([0, d3.max(data.map(d => parseInt(d.healthcare)))])
         .range([0, chartWidth])
 
     const yAxis = d3.axisLeft(y)
@@ -78,7 +89,7 @@ d3.csv("D3_data_journalism/assets/data/data.csv").then(data => {
     labelArea
       .append("text")
       .attr("stroke", "#000000")
-      .text("Obesity")
+      .text("Healthcare")
       .attr("dy", "16")
 
     labelArea.selectAll("text")
@@ -96,7 +107,7 @@ d3.csv("D3_data_journalism/assets/data/data.csv").then(data => {
             .data(data)
             .enter()
             .append("circle")
-            .attr("cx", d => parseInt(x(d.obesity)))
-            .attr("cy", d => parseInt(y(d.age)))
+            .attr("cx", d => parseInt(x(d.healthcare)))
+            .attr("cy", d => parseInt(y(d.poverty)))
             .attr("r", 10)
 })
